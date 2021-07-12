@@ -1,40 +1,30 @@
+using System;
 using UnityEngine;
 
 
 public class Movement : MonoBehaviour
-{ 
-    
-    [Header("Movement settings")]
-    [SerializeField] private float _speed;
+{
+    public float speed =10f;
 
-    private Rigidbody _rb;
-    
-    private void Start()
+    private Rigidbody rb;
+    public GameObject Player;
+    void Start()
     {
-        _rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
-    private void FixedUpdate()
+
+
+    void Update()
     {
-        MoveLogic();
-    }
-    
-    private void MoveLogic()
-    {
-        _rb.AddForce(_movementVector * _speed, ForceMode.Impulse);
-    }
-    
-    private Vector3 _movementVector
-    {
-        get
+        if (Input.GetKey(KeyCode.W))
         {
-            var horizontal = Input.GetAxis("Horizontal");
-            var vertical = Input.GetAxis("Vertical");
-
-            return new Vector3(horizontal, 0.0f, vertical);
+            rb.drag = 0;
+            gameObject.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * speed);
+           // Debug.Log("asdf");
+        }
+        else
+        {
+            rb.drag = 20;
         }
     }
-
-
-
-
 }
